@@ -5,7 +5,7 @@ namespace FunctionsLib
     {
         public Exp(Function f) : base(f)
         {
-
+            funcPtr = (x) => Math.Exp(x);
         }
         public override Function Diff()
         {
