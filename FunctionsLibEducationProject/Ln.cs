@@ -10,21 +10,11 @@ namespace FunctionsLib
 	{ 
         public Ln(Function arg) : base(arg)
         {
-
-		}
-		public override Function Diff()
-		{
-			return new Division(new Constant (1), arg);
-		}
-        
-        public override double Calc(double x)
-        {
-            if (funcPtr == null)
-            {
-                throw new InvalidOperationException("Function pointer not set.");
-            }
-
-            return funcPtr(arg.Calc(x));
-        }
+	    funcPtr = (x) => Math.Log(x);
+	}
+	public override Function Diff()
+	{
+	    return new Division(new Constant (1), arg);
+	}
     }
 }
