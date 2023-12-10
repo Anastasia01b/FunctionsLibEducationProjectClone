@@ -11,15 +11,5 @@ namespace FunctionsLib
         {
             return new Multiplication(new Exp(arg), arg.Diff());
         }
-        
-        public override double Calc(double x)
-        {
-            if (funcPtr == null)
-            {
-                throw new InvalidOperationException("Function pointer not set.");
-            }
-
-            return funcPtr(arg.Calc(x));
-        }
     }
 }
