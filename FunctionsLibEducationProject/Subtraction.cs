@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,22 +15,10 @@ namespace FunctionsLib
 		{
             funcPtr = (x, y) => x - y;
         }
-        public override Function Diff()
-		{
-            return new Subtraction(LeftArg.Diff(), RightArg.Diff());
-        }
-        public override string ToString()
+        public override Function Diff() 
         {
-            string leftArgString = LeftArg.ToString();
-            string rightArgString = RightArg.ToString();
-            if (RightArg is Constant && Math.Abs(RightArg.Calc(0)) < double.Epsilon)
-            {
-                return leftArgString; 
-            }
-            else
-            {
-                return $"{leftArgString}-{rightArgString}";
-            }
+           return new Constant(new Subtraction(LeftArg.Diff(), RightArg.Diff()).Calc(0));
         }
+        public override double Calc(double x) => LeftArg.Calc(x) - RightArg.Calc(x);
     }
 }
