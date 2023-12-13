@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace FunctionsLib
 {
     public sealed class Exp:Unares
@@ -9,7 +9,10 @@ namespace FunctionsLib
         }
         public override Function Diff()
         {
-            return new Multiplication(new Exp(arg), arg.Diff());
+            if (arg is Argument)
+                return this;
+            return new Multiplication(this, arg.Diff());
         }
+        
     }
 }
