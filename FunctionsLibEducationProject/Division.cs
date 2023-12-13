@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,26 +18,19 @@ namespace FunctionsLib
 
         public override double Calc(double x)
         {
-            if (Math.Abs(RightArg.Calc(x)) < double.Epsilon)
-            {
-                throw new DivideByZeroException("Division by zero is not allowed.");
-            }
-
             return LeftArg.Calc(x) / RightArg.Calc(x);
         }
+            
 
         public override Function Diff()
         {
-            Function leftDiff = LeftArg.Diff();
-            Function rightDiff = RightArg.Diff();
-
-            Function numeratorOne = new Multiplication(leftDiff, RightArg);
-            Function numeratorTwo = new Multiplication(LeftArg, rightDiff);
-            Function numerator = new Subtraction(numeratorOne, numeratorTwo);
-
-            Function denominator = new Multiplication(RightArg, RightArg);
-
-            return new Division(numerator, denominator);
+            if (LeftArg is Constant)
+                return new Multiplication(LeftArg, new Multiplication(new Constant(-1), new Degree(RightArg, -2)));
+            if (RightArg is Constant)
+                return new Division(LeftArg.Diff(), RightArg);
+            if ((LeftArg is Constant && RightArg is Constant) || (LeftArg is Argument && RightArg is Argument))
+                return new Constant(0);
+            return new Division(new Subtraction(new Multiplication(LeftArg.Diff(), RightArg), new Multiplication(RightArg.Diff(), LeftArg)), new Degree(RightArg, 2));
         }
     }
 }
