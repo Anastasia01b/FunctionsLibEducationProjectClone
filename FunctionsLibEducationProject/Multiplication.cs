@@ -11,6 +11,7 @@ namespace FunctionsLib
         {
             funcPtr = (x, y) => x * y;
         }
+        public override double Calc(double x) => LeftArg.Calc(x) * RightArg.Calc(x);
         public override Function Diff()
         {
             if (LeftArg is Constant && RightArg is Argument)
